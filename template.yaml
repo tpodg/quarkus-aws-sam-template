@@ -1,0 +1,66 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  quarkus-serverless
+
+  Sample SAM Template for quarkus-serverless
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 5
+    MemorySize: 128
+
+Parameters:
+  Stage:
+    Type: String
+    Default: dev
+    AllowedValues:
+      - dev
+      - prod
+
+Resources:
+  RestApiGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: !Ref Stage
+
+  QuarkusHelloLambdaFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: functions/hello-lambda/build/function.zip
+      Handler: not.used.in.provided.runtime
+      Runtime: provided.al2
+      Architectures:
+        - arm64
+      MemorySize: 128
+      Environment:
+        Variables:
+          DISABLE_SIGNAL_HANDLERS: true
+      Events:
+        ApiGateway:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            RestApiId: !Ref RestApiGateway
+            Path: /hello
+            Method: any
+        ApiGatewayProxy:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            RestApiId: !Ref RestApiGateway
+            Path: /hello/{proxy+}
+            Method: any
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  HelloWorldApi:
+    Description: "API Gateway endpoint URL for dev stage for QuarkusHelloLambdaFunction"
+    Value: !Sub "https://${RestApiGateway}.execute-api.${AWS::Region}.amazonaws.com/${Stage}"
+  QuarkusHelloLambdaFunction:
+    Description: "QuarkusHelloLambdaFunction ARN"
+    Value: !GetAtt QuarkusHelloLambdaFunction.Arn
+  QuarkusHelloLambdaFunctionIamRole:
+    Description: "Implicit IAM Role created for QuarkusHelloLambdaFunction"
+    Value: !GetAtt QuarkusHelloLambdaFunction.Arn

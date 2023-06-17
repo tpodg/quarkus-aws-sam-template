@@ -1,0 +1,22 @@
+# Gradle
+.gradle/
+build/
+
+# IntelliJ
+.idea
+*.ipr
+*.iml
+*.iws
+
+# Visual Studio Code
+.vscode
+.factorypath
+
+# AWS SAM
+.aws_sam/
+
+# Local environment
+.env
+
+# OSX
+.DS_Store

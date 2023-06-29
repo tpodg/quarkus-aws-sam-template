@@ -9,8 +9,12 @@ To use the SAM CLI, you need the following tools.
 * SAM CLI - [Install the SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
 * Docker - [Install Docker community edition](https://hub.docker.com/search/?type=edition&offering=community)
 
-To build and deploy your application for the first time, run the following in your shell:
+To init new project based on this template, run the following command:
+```bash
+sam init -l https://github.com/tpodg/quarkus-aws-sam-template
+```
 
+To build and deploy your application for the first time, run the following commands:
 ```bash
 ./gradlew build
 sam deploy --guided

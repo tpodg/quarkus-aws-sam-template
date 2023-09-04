@@ -1,8 +1,8 @@
 import org.jetbrains.kotlin.allopen.gradle.AllOpenExtension
 
 plugins {
-    kotlin("jvm") version "1.9.0"
-    kotlin("plugin.allopen") version "1.9.0" apply false
+    kotlin("jvm") version "1.9.10"
+    kotlin("plugin.allopen") version "1.9.10" apply false
     id("io.quarkus") apply false
 }
 

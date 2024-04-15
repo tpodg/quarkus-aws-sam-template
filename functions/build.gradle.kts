@@ -1,8 +1,8 @@
 import org.jetbrains.kotlin.allopen.gradle.AllOpenExtension
 
 plugins {
-    kotlin("jvm") version "1.9.10"
-    kotlin("plugin.allopen") version "1.9.10" apply false
+    kotlin("jvm") version "1.9.23"
+    kotlin("plugin.allopen") version "1.9.23" apply false
     id("io.quarkus") apply false
 }
 
@@ -38,7 +38,7 @@ subprojects {
     }
 
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.jvmTarget = JavaVersion.VERSION_17.toString()
+        kotlinOptions.jvmTarget = JavaVersion.VERSION_21.toString()
         kotlinOptions.javaParameters = true
     }
 
